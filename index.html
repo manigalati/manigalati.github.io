@@ -14,6 +14,10 @@
   <meta property="og:image" content="/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
 
+  <!-- Font preloads -->
+  <link rel="preload" href="./font/PPNeueMontreal-Regular.woff" as="font" type="font/woff" crossorigin="">
+  <link rel="preload" href="./font/PPNeueMontreal-Italic.woff" as="font" type="font/woff" crossorigin="">
+
   <!-- Load custom marker font -->
   <script>
     WebFontConfig = {google: {families: ["Press Start 2P:400:latin-ext"]}};
@@ -29,7 +33,7 @@
   </script>
   <style>
     @font-face {
-      font-family: "Marker";
+      font-family: "Press Start 2P";
       src: url("./font/fatmarker-italic.ttf") format("truetype");
       font-weight: normal;
       font-style: italic;
