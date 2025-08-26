@@ -1,122 +1,290 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Francesco Galati — Ph.D. AI researcher & creative technologist</title>
-  <meta name="description" content="Francesco Galati — Ph.D. AI researcher, creative technologist. Research in generative AI, medical imaging, federated learning." />
+  <!-- Global metadata -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Francesco Galati</title>
+  <meta name="description" content="Computer engineer building AI systems.">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Francesco Galati — AI Engineer">
+  <meta property="og:description" content="Computer engineer building AI systems.">
+  <meta property="og:image" content="/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Load custom marker font -->
+  <script>
+    WebFontConfig = {google: {families: ["Press Start 2P:400:latin-ext"]}};
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+  </script>
   <style>
-    :root{--max:900px;--accent:#0b74de}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;line-height:1.5;margin:0;color:#111}
-    .wrap{max-width:var(--max);margin:40px auto;padding:24px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    h1{margin:0;font-size:clamp(20px,4vw,32px)}
-    .tag{color:#444;margin-top:6px}
-    nav a{color:var(--accent);text-decoration:none;margin-left:12px;font-size:14px}
-    section{margin-top:28px}
-    .card{background:#fff;border:1px solid #eee;padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(16,24,40,0.03)}
-    .grid{display:grid;grid-template-columns:1fr;gap:14px}
-    .two{display:grid;grid-template-columns:1fr 280px;gap:18px}
-    @media(max-width:820px){.two{grid-template-columns:1fr}}
-    ul{margin:8px 0 0 18px}
-    a.small{font-size:13px;color:#0b74de}
-    footer{margin-top:36px;color:#666;font-size:14px}
-    .meta{font-size:13px;color:#666}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid #eee;font-size:13px;background:#fafafa}
+    @font-face {
+      font-family: "Marker";
+      src: url("./font/fatmarker-italic.ttf") format("truetype");
+      font-weight: normal;
+      font-style: italic;
+      font-display: swap;
+    }
+    :root{
+      --bg:#fff;
+      --panel:#fbfdff;
+      --text:#fff;
+      --muted:#fff;
+      --accent:#7c3aed;
+      --radius:10px;
+      --max-width:1100px;
+      --gap:28px;
+      --font-main: "Marker", Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      --text-shadow: 2px 2px 5px black;
+      --text-stroke: 1px black;
+    }
+
+    /* ---- reset ---- */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font-main);
+      line-height:1.6;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+
+      /* apply the marker visual effects site-wide */
+      text-shadow: var(--text-shadow);
+      -webkit-text-stroke: var(--text-stroke);
+      /* non-WebKit browsers will ignore -webkit-text-stroke (e.g. Firefox) but keep the shadow */
+    }
+    a{color:inherit}
+
+    /* If you find stroke too heavy for very small UI text, uncomment the override below:
+       .meta, .tag, .projects-small a, .btn.ghost { text-shadow: none; -webkit-text-stroke: 0; }
+       I've provided the rule (commented) at the end of this file for convenience.
+    */
+
+    /* ---- layout ---- */
+    .shell{max-width:var(--max-width);margin:40px auto;padding:24px;display:grid;grid-template-columns: 1fr 360px;gap:var(--gap)}
+
+    /* header inside left column for small screens */
+    header.site{grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .brand{font-size:18px}
+    .mobile-toggle{display:none;border:0;background:transparent}
+
+    /* left column (main content) */
+    main{padding-right:8px}
+    .intro{display:grid;grid-template-columns:1fr;gap:18px}
+    .kicker{letter-spacing:0.08em;font-size:13px;text-shadow: 2px 2px 5px var(--accent);text-stroke: 1px var(--accent);-webkit-text-stroke: 1px var(--accent);}
+    h1{font-family:var(--font-main);font-size:40px;margin:0}
+    p.lead{color:var(--muted);max-width:64ch;margin:0}
+
+    .links-row{display:flex;gap:10px;margin-top:12px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;text-decoration:none}
+    .btn.primary{background:linear-gradient(90deg,#fff,var(--accent))}
+    .btn.ghost{border:1px solid rgba(0,0,0,0.06);color:var(--text);background:transparent}
+
+    /* projects grid (inspired by Mads) */
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+    .card{background:var(--panel);border-radius:12px;padding:14px;border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:12px;min-height:150px}
+    .card h3{margin:0;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(0,0,0,0.03);color:var(--muted)}
+
+    /* right column (profile / quick links) */
+    aside.profile{position:sticky;top:40px;align-self:start;display:flex;flex-direction:column;gap:16px}
+    .profile .card{padding:16px;text-align:left}
+    .avatar{width:100%;height:auto;border-radius:12px;object-fit:cover;border:1px solid rgba(0,0,0,0.04)}
+    .meta{color:var(--muted);font-size:13px}
+
+    .projects-small{display:flex;flex-direction:column;gap:10px}
+    .small-row{display:flex;gap:8px;align-items:center}
+
+    footer{grid-column:1 / -1;margin-top:28px;color:var(--muted);font-size:13px}
+
+    /* interactions */
+    .card:hover{transform:translateY(-6px);transition:transform 220ms cubic-bezier(.2,.9,.2,1)}
+
+    /* responsive */
+    @media (max-width:1000px){.shell{grid-template-columns:1fr; padding:20px}.profile{position:relative;top:0}.avatar{max-width:360px;margin:0 auto}}
+    @media (max-width:700px){h1{font-size:32px}.projects{grid-template-columns:repeat(2,1fr)}.mobile-toggle{display:inline-block}}
+    @media (max-width:420px){.projects{grid-template-columns:1fr}.brand{font-size:16px}}
+
+    /* small helper for underlines like Long */
+    .underline{ text-decoration:underline }
+
+    /* optional override: reduce/disable stroke & shadow for very small UI text (recommended if the stroke reduces legibility)
+       Uncomment the line below if needed:
+    */
+    /* .meta, .tag, .projects-small a, small { text-shadow: none !important; -webkit-text-stroke: 0 !important; } */
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>Francesco Galati</h1>
-        <div class="tag">Ph.D. AI researcher &amp; creative technologist</div>
-        <div class="meta">francesco.galati@live.com • +39 3927710262 • <a href="https://www.github.com/manigalati" class="small">github.com/manigalati</a></div>
-      </div>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#work">Research</a>
-        <a href="#projects">Projects</a>
-        <a href="#education">Education</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <div class="shell" role="document">
+    <header class="site" aria-label="Site header">
+      <div class="brand"><a href="/">Alex Long</a></div>
+      <button class="mobile-toggle" aria-expanded="false" aria-controls="mobile-menu" id="mobile-toggle">Menu</button>
     </header>
 
-    <main class="two">
-      <div>
-        <section id="about" class="card">
-          <h2 style="margin-top:0">About</h2>
-          <p>Since 2020 I have researched generative AI, specializing in text-to-image, image-to-image, and image-to-text translation tasks. My work spans medical imaging, domain adaptation and federated learning, as applied to robustness across diverse datasets.</p>
+    <main>
+      <section class="intro" aria-labelledby="intro-title">
+        <div>
+          <div class="kicker">Hi — I build on the web</div>
+          <h1 id="intro-title">Fast, accessible interfaces — with a craft mindset.</h1>
+          <p class="lead">I’m a frontend engineer who cares about performance, readable design systems and production polish. I ship components, write small libraries and help teams move faster.</p>
 
-          <p class="meta">Awarded Ph.D. in Artificial Intelligence, Sorbonne Université (2024).</p>
-        </section>
-
-        <section id="work" class="card">
-          <h2 style="margin-top:0">Selected Publications</h2>
-          <p class="meta">Short list — <a href="https://scholar.google.com/citations?user=PxEZk_cAAAAJ" class="small">Full list on Google Scholar</a></p>
-          <ul>
-            <li><strong>ImageSet2Text: Describing Sets of Images through Text</strong> — F. Galati et al. (2025). Under review.</li>
-            <li><strong>Federated multi-centric image segmentation with uneven label distribution</strong> — F. Galati et al., MICCAI (2024). <a href="https://doi.org/10.1007/978-3-031-03789-4_16" class="small">doi</a></li>
-            <li><strong>Vessel-CAPTCHA: An efficient learning framework for vessel annotation and segmentation</strong> — F. Galati et al., Medical Image Analysis (2022). <a href="https://doi.org/10.1007/978-3-030-78710-3_11" class="small">doi</a></li>
-          </ul>
-        </section>
-
-        <section id="projects" class="card">
-          <h2 style="margin-top:0">Selected projects & collaborations</h2>
-          <p class="meta">Cross-disciplinary collaborations with artists and researchers.</p>
-          <ul>
-            <li><strong>Who Is Real?</strong> (ongoing, unreleased) — CESURA Photo Collective. <a href="https://www.cesura.it" class="small">cesura.it</a></li>
-            <li><strong>EEG Paintings</strong> — World AI Cannes Festival / Galerie Catherine d’Issert (2022). <a href="https://www.worldaicannes.com" class="small">worldaicannes.com</a></li>
-            <li><strong>How To Successfully Analyze Everyone's Heart</strong> — World Heart Day / inEurHeart (2022). <a href="https://ineurheart.eu/files/2011/12/JOURNEE-MONDIALE-DU-COEUR_29-Septembre2022_pgm-final-3.pdf" class="small">program</a></li>
-          </ul>
-        </section>
-
-        <section id="education" class="card">
-          <h2 style="margin-top:0">Education</h2>
-          <ul>
-            <li>Ph.D. in Artificial Intelligence — Sorbonne Université | EURECOM (2021–2024)</li>
-            <li>Master's Degree in Data Science — Télécom Paris | EURECOM (2019–2021)</li>
-            <li>Master's Degree in Computer Engineering — Politecnico di Torino (2018–2021), <span class="pill">110/110 cum laude</span></li>
-            <li>Bachelor's Degree in Computer Engineering — Politecnico di Torino (2015–2018), <span class="pill">110/110 cum laude</span></li>
-          </ul>
-        </section>
-
-      </div>
-
-      <aside>
-        <div class="card">
-          <h3 style="margin-top:0">Skills & Languages</h3>
-          <p class="meta"><strong>Programming:</strong></p>
-          <p>PyTorch, TensorFlow, Keras; Python, C++, C#, JavaScript, Java, Swift, MATLAB, R; PHP, SQL, Assembly</p>
-
-          <p class="meta"><strong>Languages:</strong></p>
-          <p>IT — native • EN — professional proficiency</p>
-
-          <hr style="margin:16px 0" />
-
-          <h3>Quick links</h3>
-          <p class="meta"><a href="https://scholar.google.com/citations?user=PxEZk_cAAAAJ" class="small">Google Scholar</a><br>
-          <a href="https://www.github.com/manigalati" class="small">GitHub</a><br>
-          <a href="https://drive.google.com/drive/folders/1jmz6B56t78mi8zEo7alrSv1grOD7EcP2" class="small">CV & materials (drive)</a></p>
-
-          <hr style="margin:16px 0" />
-
-          <h3>Contact</h3>
-          <p class="meta">francesco.galati@live.com<br>+39 3927710262</p>
+          <div class="links-row">
+            <a class="btn primary" href="#projects">Projects</a>
+            <a class="btn ghost" href="/about">About</a>
+            <a class="btn ghost" href="mailto:hello@example.com">Email</a>
+          </div>
         </div>
 
-        <div style="height:18px"></div>
-
-        <div class="card">
-          <h3 style="margin-top:0">Notes</h3>
-          <p class="meta">This is a shortened landing page derived only from your provided CV. No new claims were added. For a fuller academic portfolio, link to the Google Scholar page above.</p>
+        <div class="meta" aria-hidden="true">
+          <!-- compact profile card (visual balance similar to Mads) -->
+          <div class="card" role="region" aria-label="Featured">
+            <img class="avatar" src="/me-cover.jpg" alt="Portrait of Alex Long">
+            <div style="margin-top:10px">Featured — Atlas UI System</div>
+            <div class="meta">Design system, tokens, components — used in production by multiple teams.</div>
+          </div>
         </div>
-      </aside>
+      </section>
+
+      <section id="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title" style="font-size:18px;margin:18px 0 8px">Selected Projects</h2>
+        <div class="projects">
+          <article class="card" tabindex="0">
+            <div>
+              <h3>Atlas — Design system</h3>
+              <p>Tokens, components and documentation to ship consistent UI across multiple products.</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Figma</span>
+              <span class="tag">React</span>
+              <span class="tag">Design Systems</span>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <div>
+              <h3>Pulse — Analytics SDK</h3>
+              <p>Privacy-first, small-footprint instrumentation library for web apps.</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Node</span>
+              <span class="tag">Telemetry</span>
+              <span class="tag">Open Source</span>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <div>
+              <h3>Nimbus — Marketing site</h3>
+              <p>Static site with fast performance, careful SEO and accessible components.</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Performance</span>
+              <span class="tag">Jamstack</span>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <div>
+              <h3>Manawave — Open-source marquee</h3>
+              <p>A performant, tested directional marquee library (inspired by creative web experiments).</p>
+            </div>
+            <div class="tags">
+              <span class="tag">JavaScript</span>
+              <span class="tag">Animation</span>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <div>
+              <h3>Helio — Campaign site</h3>
+              <p>Design and implementation of a lightweight marketing site with tight CLS and great Lighthouse scores.</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Accessibility</span>
+              <span class="tag">SEO</span>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <div>
+              <h3>kb-tools — CLI utilities</h3>
+              <p>Small command-line tools to speed up day-to-day dev workflows and file transformations.</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Rust</span>
+              <span class="tag">Python</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
     </main>
 
+    <aside class="profile" aria-labelledby="profile-title">
+      <div class="card" id="profile-title">
+        <div style="display:flex;gap:12px;align-items:center">
+          <img src="/avatar-small.jpg" alt="Alex Long" width="64" height="64" style="border-radius:10px;object-fit:cover">
+          <div>
+            <div style="font-weight:700">Alex Long</div>
+            <div class="meta">Frontend engineer — EU</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;color:var(--muted);font-size:14px">I help teams build fast, accessible and maintainable frontends. I enjoy small libraries, good docs and pragmatic design systems.</div>
+      </div>
+
+      <div class="card">
+        <div style="margin-bottom:8px">Quick links</div>
+        <div class="projects-small">
+          <a class="underline" href="/resume.pdf">Resume</a>
+          <a href="/blog">Writing</a>
+          <a href="/uses">Uses</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:700">Contact</div>
+        <div class="meta" style="margin-top:6px">hello@example.com</div>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <a aria-label="Github" href="#">GitHub</a>
+          <a aria-label="LinkedIn" href="#">LinkedIn</a>
+        </div>
+      </div>
+    </aside>
+
     <footer>
-      <div class="meta">Made from the CV provided. To publish: create a public repo named <code>yourusername.github.io</code>, add this <code>index.html</code> file and push. Your site will be available at <code>https://yourusername.github.io</code>.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <small>© Alex Long — 2025</small>
+        <small class="meta">Built with attention to performance, accessibility and craft.</small>
+      </div>
     </footer>
   </div>
+
+  <script>
+    // lightweight mobile toggle for header (keeps markup simple for static sites)
+    (function(){
+      const btn = document.getElementById('mobile-toggle');
+      if(!btn) return;
+      btn.addEventListener('click', ()=>{
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        // optionally open a simple nav — omitted to keep this example minimal
+      });
+    })();
+  </script>
 </body>
 </html>
