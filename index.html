@@ -14,10 +14,6 @@
   <meta property="og:image" content="/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Font preloads -->
-  <link rel="preload" href="./font/PPNeueMontreal-Regular.woff" as="font" type="font/woff" crossorigin="">
-  <link rel="preload" href="./font/PPNeueMontreal-Italic.woff" as="font" type="font/woff" crossorigin="">
-
   <!-- Load custom marker font -->
   <script>
     WebFontConfig = {google: {families: ["Press Start 2P:400:latin-ext"]}};
@@ -33,7 +29,21 @@
   </script>
   <style>
     @font-face {
-      font-family: "Press Start 2P";
+      font-family: "PPNeueMontreal";
+      src: url("./font/PPNeueMontreal-Regular.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "PPNeueMontreal";
+      src: url("./font/PPNeueMontreal-Italic.woff") format("woff");
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Marker";
       src: url("./font/fatmarker-italic.ttf") format("truetype");
       font-weight: normal;
       font-style: italic;
@@ -48,7 +58,7 @@
       --radius:10px;
       --max-width:1100px;
       --gap:28px;
-      --font-main: "Marker", Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      --font-main: "PPNeueMontreal", Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
       --text-shadow: 2px 2px 5px black;
       --text-stroke: 1px black;
     }
