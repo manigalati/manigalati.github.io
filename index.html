@@ -28,13 +28,6 @@
       font-style: italic;
       font-display: swap;
     }
-    @font-face {
-      font-family: "PressStart2P";
-      src: url("./font/PressStart2P.tff") format("truetype");
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
     :root{
       --bg:#fff;
       --panel:#fbfdff;
@@ -50,7 +43,7 @@
 
     /* ---- reset ---- */
     *{box-sizing:border-box}
-    html,body{height:100%}
+    /*html,body{height:100%}*/
     body{
       margin:0;
       font-family:var(--font-main);
@@ -88,16 +81,16 @@
 
     .links-row{display:flex;gap:10px;margin-top:12px}
     .btn{display:inline-block;padding:10px 14px;border-radius:10px;text-decoration:none}
-    .btn.primary{background:linear-gradient(90deg,#fff,var(--accent))}
+    .btn.primary{background:linear-gradient(90deg,rgba(0,0,0,0.01),var(--accent))}
     .btn.ghost{border:1px solid rgba(0,0,0,0.06);color:var(--text);background:transparent}
 
     /* projects grid (inspired by Mads) */
     .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
     .card{background:var(--panel);border-radius:12px;padding:14px;border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:12px;min-height:150px}
-    .card h3{margin:0;font-size:18px;font-family:var(--font-code);}
-    .card p{margin:0;color:var(--muted);font-size:14px}
+    .card h3{margin:0;font-size:15px;font-family:var(--font-code);}
+    .card p{margin:0;font-size:14px}
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(0,0,0,0.03);color:var(--muted)}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(0,0,0,0.03)}
 
     /* right column (profile / quick links) */
     aside.profile{position:sticky;top:40px;align-self:start;display:flex;flex-direction:column;gap:16px}
@@ -108,7 +101,7 @@
     .projects-small{display:flex;flex-direction:column;gap:10px}
     .small-row{display:flex;gap:8px;align-items:center}
 
-    footer{grid-column:1 / -1;margin-top:28px;color:var(--muted);font-size:13px}
+    footer{grid-column:1 / -1;margin-top:28px;font-size:13px}
 
     /* interactions */
     .card:hover{transform:translateY(-6px);transition:transform 220ms cubic-bezier(.2,.9,.2,1)}
@@ -137,24 +130,25 @@
           <h1 id="intro-title">Fast, accessible interfaces — with a craft mindset.</h1> -->
           <p class="kicker" style="display: inline;">Hi! </p><p style="display: inline;" class="lead">I’m a computer engineer who bridges creative minds and AI to turn possibilities into practical solutions.</p>
 
+          <!--
           <div class="links-row">
-            <a class="btn primary" href="#projects">Projects</a>
-            <a class="btn ghost" href="/about">About</a>
+            <a class="btn primary" href="/about">About</a>
+            <a class="btn ghost" href="#projects">Projects</a>
             <a class="btn ghost" href="mailto:francesco.galati@live.com">Email</a>
           </div>
+          -->
         </div>
 
-        <div class="meta" aria-hidden="true">
-          <!-- compact profile card (visual balance similar to Mads) -->
+        <!--<div class="meta" aria-hidden="true">
           <div class="card" role="region" aria-label="Featured">
             <img class="avatar" src="/me-cover.jpg" alt="Portrait of Francesco Galati">
             <div style="margin-top:10px">Francesco Galati</div>
           </div>
-        </div>
+        </div>-->
       </section>
 
       <section id="projects" aria-labelledby="projects-title">
-        <h2 id="projects-title" style="font-size:18px;margin:18px 0 8px">Selected Projects</h2>
+        <h2 id="projects-title" style="font-size:18px;margin:18px 0 8px;font-size: 1rem;text-transform: uppercase;font-weight: 400;">Selected <br> Works ↘</h2>
         <div class="projects">
           <article class="card" tabindex="0">
             <div>
@@ -222,22 +216,21 @@
     <aside class="profile" aria-labelledby="profile-title">
       <div class="card" id="profile-title">
         <div style="display:flex;gap:12px;align-items:center">
-          <img src="/avatar-small.jpg" alt="Francesco Galati" width="64" height="64" style="border-radius:10px;object-fit:cover">
+          <img src="/img/avatar.png" alt="Francesco Galati" width="150" style="border-radius:10px;object-fit:cover">
           <div>
             <div style="font-weight:700">Francesco Galati</div>
-            <!--<div class="meta">Frontend engineer — EU</div>-->
+            <div class="meta">Me in the style of <a href="https://www.youtube.com/watch?v=4PUIxEWmsvI" target="_blank">Don Hertzfeldt's World of Tomorrow</a></div>
           </div>
         </div>
 
-        <!--<div style="margin-top:12px;color:var(--muted);font-size:14px">I help teams build fast, accessible and maintainable frontends. I enjoy small libraries, good docs and pragmatic design systems.</div>-->
+        <div style="margin-top:12px;font-size:14px">Me in the style of <a href="https://www.youtube.com/watch?v=4PUIxEWmsvI" target="_blank">Don Hertzfeldt's World of Tomorrow</a></div>
       </div>
 
       <div class="card">
-        <div style="margin-bottom:8px">Quick links</div>
+        <div style="margin-bottom:8px;font-weight:700">Thoughts</div>
         <div class="projects-small">
-          <a class="underline" href="/resume.pdf">Resume</a>
-          <a href="/blog">Writing</a>
-          <a href="/uses">Uses</a>
+          <a class="/about" href="/resume.pdf">About Me</a>
+          <a href="/blog">Name of Article</a>
         </div>
       </div>
 
@@ -245,8 +238,8 @@
         <div style="font-weight:700">Contact</div>
         <div class="meta" style="margin-top:6px">francesco.galati@live.com</div>
         <div style="margin-top:8px;display:flex;gap:8px">
-          <a aria-label="Github" href="#">GitHub</a>
-          <a aria-label="LinkedIn" href="#">LinkedIn</a>
+          <a aria-label="Github" href="https://github.com/manigalati">GitHub</a>
+          <a aria-label="Google Scholar" href="https://scholar.google.com/citations?user=PxEZk_cAAAAJ">Google Scholar</a>
         </div>
       </div>
     </aside>
@@ -254,7 +247,6 @@
     <footer>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
         <small>© Francesco Galati — 2025</small>
-        <small class="meta">Built with attention to performance, accessibility and craft.</small>
       </div>
     </footer>
   </div>
@@ -273,6 +265,7 @@
       });
     })();
   </script>
+
 
 
 </body></html>
