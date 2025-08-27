@@ -14,7 +14,7 @@
   <meta property="og:image" content="/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Load custom marker font -->
+  <!-- Load custom marker font
   <script>
     WebFontConfig = {google: {families: ["Press Start 2P:400:latin-ext"]}};
     (function () {
@@ -26,7 +26,7 @@
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(wf, s);
     })();
-  </script>
+  </script>-->
   <style>
     @font-face {
       font-family: "PPNeueMontreal";
@@ -57,6 +57,7 @@
       --accent:#7c3aed;
       --gap:28px;
       --font-main: "PPNeueMontreal";
+      --font-code: "Press Start 2P";
       --text-shadow: 2px 2px 5px black;
       --text-stroke: 1px black;
     }
@@ -73,8 +74,8 @@
       -webkit-font-smoothing:antialiased;
 
       /* apply the marker visual effects site-wide */
-      text-shadow: var(--text-shadow);
-      -webkit-text-stroke: var(--text-stroke);
+      /*text-shadow: var(--text-shadow);
+      -webkit-text-stroke: var(--text-stroke);*/
       /* non-WebKit browsers will ignore -webkit-text-stroke (e.g. Firefox) but keep the shadow */
     }
     a{color:inherit}
@@ -95,9 +96,9 @@
     /* left column (main content) */
     main{padding-right:8px}
     .intro{display:grid;grid-template-columns:1fr;gap:18px}
-    .kicker{letter-spacing:0.08em;font-size:13px;text-shadow: 2px 2px 5px var(--accent);text-stroke: 1px var(--accent);-webkit-text-stroke: 1px var(--accent);}
+    .kicker{letter-spacing:0.08em;font-size:16px;color:var(--accent);text-shadow: 2px 2px 5px var(--accent);text-stroke: 0.01em var(--accent);-webkit-text-stroke: 0.01 var(--accent);}
     h1{font-family:var(--font-main);font-size:40px;margin:0}
-    p.lead{color:var(--muted);max-width:64ch;margin:0}
+    p.lead{max-width:64ch;margin:0}
 
     .links-row{display:flex;gap:10px;margin-top:12px}
     .btn{display:inline-block;padding:10px 14px;border-radius:10px;text-decoration:none}
@@ -107,7 +108,7 @@
     /* projects grid (inspired by Mads) */
     .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
     .card{background:var(--panel);border-radius:12px;padding:14px;border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:12px;min-height:150px}
-    .card h3{margin:0;font-size:18px}
+    .card h3{margin:0;font-size:18px;font-family:var(--font-code);}
     .card p{margin:0;color:var(--muted);font-size:14px}
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
     .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(0,0,0,0.03);color:var(--muted)}
@@ -116,7 +117,7 @@
     aside.profile{position:sticky;top:40px;align-self:start;display:flex;flex-direction:column;gap:16px}
     .profile .card{padding:16px;text-align:left}
     .avatar{width:100%;height:auto;border-radius:12px;object-fit:cover;border:1px solid rgba(0,0,0,0.04)}
-    .meta{color:var(--muted);font-size:13px}
+    .meta{font-size:13px}
 
     .projects-small{display:flex;flex-direction:column;gap:10px}
     .small-row{display:flex;gap:8px;align-items:center}
