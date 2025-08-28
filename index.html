@@ -32,8 +32,8 @@
   <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P:400&amp;subset=latin-ext" media="all">
-  <link rel="preload" href="./font/PPNeueMontreal-Regular.woff" as="font" type="font/woff" crossorigin>
-  <link rel="preload" href="./font/PPNeueMontreal-Italic.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="./font/PPNeueMontreal-Regular.woff" as="font" type="font/woff" crossorigin="">
+  <link rel="preload" href="./font/PPNeueMontreal-Italic.woff" as="font" type="font/woff" crossorigin="">
   
   <style>
     @font-face {
@@ -76,16 +76,16 @@
     a{color:inherit}
 
     /* ---- layout ---- */
-    .shell{margin:40px auto;padding:24px;display:grid;grid-template-columns: 1fr 360px;gap:var(--gap)}
+    .shell{margin:10px auto;padding:24px;display:grid;grid-template-columns: 1fr 72%;gap:var(--gap);}
 
-    /* left column (main content) */
-    main{padding-right:8px}
+    /* right column */
+    main{padding-left:8px}
     .intro{display:grid;grid-template-columns:1fr;gap:18px}
     .kicker{font-style: italic;font-size: 1.05em;letter-spacing:0.06em;color:var(--accent);text-shadow: var(--text-shadow);text-stroke: var(--text-stroke);-webkit-text-stroke: var(--text-stroke);}
     h1{font-family:var(--font-main);font-size:40px;margin:0}
     p.lead{max-width:64ch;margin:0}
 
-    /* projects grid (inspired by Mads) */
+    /* projects grid */
     .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
     .card{background:var(--panel);border-radius:12px;padding:14px;border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:12px;min-height:150px}
     .card h3{margin:0;font-size:15px;font-family:var(--font-code);}
@@ -93,7 +93,7 @@
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
     .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(124, 58, 237, 0.08);text-decoration:none;color:inherit;}
 
-    /* right column (profile / quick links) */
+    /* left column */
     aside.profile{position:sticky;top:40px;align-self:start;display:flex;flex-direction:column;gap:16px}
     .profile .card{padding:16px;text-align:left}
     .avatar{width:100%;height:auto;border-radius:12px;object-fit:cover;border:1px solid rgba(0,0,0,0.04)}
@@ -107,14 +107,88 @@
     .card:hover{transform:translateY(-6px);transition:transform 220ms cubic-bezier(.2,.9,.2,1)}
 
     /* responsive */
-    @media (max-width:1000px){.shell{grid-template-columns:1fr; padding:20px}.profile{position:relative;top:0}.avatar{max-width:360px;margin:0 auto}}
+    @media (max-width: 1000px) {
+      .shell{
+        grid-template-columns:1fr;
+        padding:20px;
+        grid-auto-flow:row;
+      }
+      
+      aside.profile{
+        position:static;
+        top:auto;
+        align-self:stretch;
+      }
+      
+      main{
+        position:relative;
+        top:0
+      }
+      
+      #profile-title { display:block !important; padding:0 !important; }
+      #profile-title img {
+        position: absolute !important;
+        height: 60% !important;
+        top: 15% !important;
+        left: 10% !important;
+        transform: translateX(-50%) !important;
+        width: auto !important;
+      }
+      #profile-title > div:nth-of-type(1) { /* name */
+        position:absolute !important;
+        top:50% !important;
+        left:50% !important;
+        transform:translate(-50%,-50%) !important;
+        text-align:center !important;
+        font-weight:700 !important;
+        font-size:1.5em !important;
+      }
+      #profile-title > div:nth-of-type(2) { /* caption */
+        position:absolute !important;
+        bottom:0 !important;
+        left:5% !important;
+        font-size:14px !important;
+        margin:8px !important;
+      }
+    }
     @media (max-width:700px){h1{font-size:32px}.projects{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:420px){.projects{grid-template-columns:1fr}}
+
+
   </style>
   
 </head>
 <body>
   <div class="shell" role="document">
+    <aside class="profile" aria-labelledby="profile-title">
+      <div class="card" id="profile-title">
+        <div style="display:flex;gap:12px;align-items:center">
+          <img src="/img/avatar.png" alt="Francesco Galati" width="40%" loading="lazy" style="border-radius:10px;object-fit:cover">
+          <div>
+            <div style="font-weight:700;font-size: 1.5em;">Francesco Galati</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;font-size:14px;">Me in the style of <a href="https://www.youtube.com/watch?v=4PUIxEWmsvI" target="_blank">Don Hertzfeldt's World of Tomorrow</a></div>
+      </div>
+
+      <div class="card">
+        <div style="margin-bottom:8px;font-weight:700">Thoughts</div>
+        <div class="projects-small">
+          <a href="/about">About Me</a>
+          <a href="/blog">Name of Article</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:700">Contact</div>
+        <div class="meta" style="margin-top:6px"><a href="mailto:francesco.galati@live.com">francesco.galati@live.com</a></div>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <a aria-label="Github" href="https://github.com/manigalati">GitHub</a>
+          <a aria-label="Google Scholar" href="https://scholar.google.com/citations?user=PxEZk_cAAAAJ">Google Scholar</a>
+        </div>
+      </div>
+    </aside>
     <main>
       <section class="intro" aria-labelledby="intro-title">
         <div>
@@ -205,40 +279,36 @@
       </section>
     </main>
 
-    <aside class="profile" aria-labelledby="profile-title">
-      <div class="card" id="profile-title">
-        <div style="display:flex;gap:12px;align-items:center">
-          <img src="/img/avatar.png" alt="Francesco Galati" width="150" loading="lazy" style="border-radius:10px;object-fit:cover">
-          <div>
-            <div style="font-weight:700;font-size: 1.5em;">Francesco Galati</div>
-          </div>
-        </div>
-
-        <div style="margin-top:12px;font-size:14px;">Me in the style of <a href="https://www.youtube.com/watch?v=4PUIxEWmsvI" target="_blank">Don Hertzfeldt's World of Tomorrow</a></div>
-      </div>
-
-      <div class="card">
-        <div style="margin-bottom:8px;font-weight:700">Thoughts</div>
-        <div class="projects-small">
-          <a href="/about">About Me</a>
-          <a href="/blog">Name of Article</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div style="font-weight:700">Contact</div>
-        <div class="meta" style="margin-top:6px"><a href="mailto:francesco.galati@live.com">francesco.galati@live.com</a></div>
-        <div style="margin-top:8px;display:flex;gap:8px">
-          <a aria-label="Github" href="https://github.com/manigalati">GitHub</a>
-          <a aria-label="Google Scholar" href="https://scholar.google.com/citations?user=PxEZk_cAAAAJ">Google Scholar</a>
-        </div>
-      </div>
-    </aside>
-
     <footer>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
         <small>© Francesco Galati — 2025</small>
       </div>
     </footer>
   </div>
+
+  <script>
+    (function(){
+      const profile = document.getElementById('profile-title');
+      if (!profile) return;
+      const wrapper = profile.querySelector('div'); // the flex wrapper containing img+name
+      const img = profile.querySelector('img');
+    
+      function relocate() {
+        if (window.innerWidth <= 1000) {
+          // move the <img> to be the first child of #profile-title
+          if (img && img.parentElement !== profile) profile.insertBefore(img, profile.firstChild);
+        } else {
+          // move it back inside the original wrapper as first child
+          if (img && wrapper && img.parentElement !== wrapper) wrapper.insertBefore(img, wrapper.firstChild);
+        }
+      }
+    
+      window.addEventListener('resize', relocate);
+      window.addEventListener('DOMContentLoaded', relocate);
+      // initial run (in case script loaded late)
+      relocate();
+    })();
+    </script>
+
+
 </body></html>
