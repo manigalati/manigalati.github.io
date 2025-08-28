@@ -33,7 +33,7 @@
       --panel:#fbfdff;
       --text:#000;
       --muted:#fff;
-      --accent:#7c3aed;
+      --accent:rgb(124, 58, 237);
       --gap:28px;
       --font-main: "PPNeueMontreal";
       --font-code: "Press Start 2P";
@@ -75,7 +75,7 @@
     /* left column (main content) */
     main{padding-right:8px}
     .intro{display:grid;grid-template-columns:1fr;gap:18px}
-    .kicker{letter-spacing:0.08em;font-size:16px;color:var(--accent);text-shadow: 2px 2px 5px var(--accent);text-stroke: 0.01em var(--accent);-webkit-text-stroke: 0.01 var(--accent);}
+    .kicker{font-style: italic;font-size: 1.05em;letter-spacing:0.06em;color:var(--accent);text-shadow: 2px 2px 5px rgba(124, 58, 237, 0.6);text-stroke: 0.01em var(--accent);-webkit-text-stroke: 0.01em var(--accent);}
     h1{font-family:var(--font-main);font-size:40px;margin:0}
     p.lead{max-width:64ch;margin:0}
 
@@ -90,7 +90,7 @@
     .card h3{margin:0;font-size:15px;font-family:var(--font-code);}
     .card p{margin:0;font-size:14px}
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(0,0,0,0.03)}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(124, 58, 237, 0.08);text-decoration:none;color:inherit;}
 
     /* right column (profile / quick links) */
     aside.profile{position:sticky;top:40px;align-self:start;display:flex;flex-direction:column;gap:16px}
@@ -148,81 +148,87 @@
       </section>
 
       <section id="projects" aria-labelledby="projects-title">
-        <h2 id="projects-title" style="font-size:18px;margin:18px 0 8px;font-size: 1rem;text-transform: uppercase;font-weight: 400;">Selected <br> Works ↘</h2>
-        <div class="projects">
-          <article class="card" tabindex="0">
-            <div>
-              <h3>RobustMedSeg</h3>
-              <p>Federated multi-centric image segmentation with uneven label distribution. In: Medical Image Computing and Computer Assisted Intervention (MICCAI).</p>
-            </div>
-            <div class="tags">
-              <span class="tag">AI</span>
-              <span class="tag">Computer Vision</span>
-              <span class="tag">Art</span>
-            </div>
-          </article>
+      <h2 id="projects-title" style="font-size:18px;margin:18px 0 8px;font-size: 1rem;text-transform: uppercase;font-weight: 400;">Selected <br> Works ↘</h2>
+      <div class="projects">
+        <article class="card" tabindex="0">
+          <div>
+            <h3>RobustMedSeg</h3>
+            <p>Federated <i class="kicker">multi-centric image segmentation</i> with uneven label distribution. 
+              <a href="https://doi.org/10.1007/978-3-031-72117-5_33" target="_blank">In: Medical Image Computing and Computer Assisted Intervention (MICCAI).</a>
+            </p>
+          </div>
+          <div class="tags">
+            <a class="tag" href="https://en.wikipedia.org/wiki/Federated_learning" target="_blank">Federated Learning</a>
+            <a class="tag" href="https://en.wikipedia.org/wiki/Domain_adaptation" target="_blank">Domain Adaptation</a>
+          </div>
+        </article>
+    
+        <article class="card" tabindex="0">
+          <div>
+            <h3>OpenFilter</h3>
+            <p>A framework to <i class="kicker">democratize research access</i> to social media AR filters. 
+              <a href="https://proceedings.neurips.cc/paper_files/paper/2022/hash/50fd4a244de17f856709036edda9854e-Abstract-Datasets_and_Benchmarks.html" target="_blank">In: Advances in Neural Information Processing Systems (NeurIPS).</a>
+            </p>
+          </div>
+          <div class="tags">
+            <a class="tag" href="https://en.wikipedia.org/wiki/Augmented_reality" target="_blank">Augmented Reality</a>
+            <a class="tag" href="https://en.wikipedia.org/wiki/AutoClicker" target="_blank">Auto clicker</a>
+            <a class="tag" href="https://en.wikipedia.org/wiki/Intelligent_agent" target="_blank">Intelligent Agents</a>
+          </div>
+        </article>
+    
+        <article class="card" tabindex="0">
+          <div>
+            <h3>Vessel-CAPTCHA</h3>
+            <p>An <i class="kicker">efficient learning</i> framework for vessel annotation and segmentation. 
+              <a href="https://doi.org/10.1016/j.media.2021.102263" target="_blank">In: Medical Image Analysis.</a>
+            </p>
+          </div>
+          <div class="tags">
+            <a class="tag" href="https://en.wikipedia.org/wiki/Weak_supervision" target="_blank">Weak Supervision</a>
+          </div>
+        </article>
+    
+        <article class="card" tabindex="0">
+          <div>
+            <h3>EEG Paintings</h3>
+            <p>Exhibition of <i class="kicker">AI-generated paintings</i> depicting emotional states, captured via a <i class="kicker">brain–computer interface</i>. 
+              <a href=" https://doi.org/10.1007/978-3-031-03789-4_16" target="_blank">In: Artificial Intelligence in Music, Sound, Art and Design (EvoMUSART).</a>
+            </p>
+          </div>
+          <div class="tags">
+            <a class="tag" href="https://en.wikipedia.org/wiki/Generative_adversarial_network" target="_blank">GANs</a>
+            <a class="tag" href="https://en.wikipedia.org/wiki/Brain%E2%80%93computer_interface" target="_blank">BCI</a>
+          </div>
+        </article>
+    
+        <article class="card" tabindex="0">
+          <div>
+            <h3>How To Successfully Analyze Everyone's Heart</h3>
+            <p>3D Slicer plugin for <i class="kicker">quality control</i> of heart segmentation models. 
+              <a href="https://doi.org/10.1007/978-3-030-78710-3_11" target="_blank">In: International Conference on Functional Imaging and Modeling of the Heart (FIMH).</a>
+            </p>
+          </div>
+          <div class="tags">
+            <a class="tag" href="https://en.wikipedia.org/wiki/Autoencoder" target="_blank">Autoencoder</a>
+            <a class="tag" href="https://en.wikipedia.org/wiki/Convolutional_neural_network" target="_blank">CNNs</a>
+          </div>
+        </article>
+    
+        <article class="card" tabindex="0">
+          <div>
+            <h3>I-Muse</h3>
+            <p>Mobile app-based <i class="kicker">recommendation system</i> offering personalized interactions with the artworks exhibited in the museums of Turin.</p>
+          </div>
+          <div class="tags">
+            <a class="tag" href="https://en.wikipedia.org/wiki/Natural_language_processing" target="_blank">NLP</a>
+            <a class="tag" href="https://en.wikipedia.org/wiki/Knowledge_graph" target="_blank">Knowledge Graphs</a>
+            <a class="tag" href="https://en.wikipedia.org/wiki/Representation_learning" target="_blank">Latent Representation Learning</a>
+          </div>
+        </article>
+      </div>
+    </section>
 
-          <article class="card" tabindex="0">
-            <div>
-              <h3>OpenFilter</h3>
-              <p>A framework to democratize research access to social media AR filters. In: Advances in Neural Information Processing Systems (NeurIPS).</p>
-            </div>
-            <div class="tags">
-              <span class="tag">AI</span>
-              <span class="tag">Computer Vision</span>
-              <span class="tag">Art</span>
-            </div>
-          </article>
-
-          <article class="card" tabindex="0">
-            <div>
-              <h3>Vessel-CAPTCHA</h3>
-              <p>An efficient learning framework for vessel annotation and segmentation. In: Medical Image Analysis.</p>
-            </div>
-            <div class="tags">
-              <span class="tag">AI</span>
-              <span class="tag">Computer Vision</span>
-              <span class="tag">Art</span>
-            </div>
-          </article>
-      
-          <article class="card" tabindex="0">
-            <div>
-              <h3>EEG Paintings</h3>
-              <p>Exhibition of AI-generated paintings depicting emotional states, captured via a brain–computer interface. In: Artificial Intelligence in Music, Sound, Art and Design (EvoMUSART).</p>
-            </div>
-            <div class="tags">
-              <span class="tag">Generative AI</span>
-              <span class="tag">BCI</span>
-              <span class="tag">Art</span>
-            </div>
-          </article>
-      
-          <article class="card" tabindex="0">
-            <div>
-              <h3>How To Successfully Analyze Everyone's Heart</h3>
-              <p>3D Slicer plugin for autoencoder-based quality control of heart segmentation models. In: International Conference on Functional Imaging and Modeling of the Heart (FIMH).</p>
-            </div>
-            <div class="tags">
-              <span class="tag">Medical Imaging</span>
-              <span class="tag">Autoencoders</span>
-              <span class="tag">3DSlicer</span>
-            </div>
-          </article>
-      
-          <article class="card" tabindex="0">
-            <div>
-              <h3>I-Muse</h3>
-              <p>Mobile app-based recommendation system offering personalized interactions with the artworks exhibited in the museums of Turin.</p>
-            </div>
-            <div class="tags">
-              <span class="tag">NLP</span>
-              <span class="tag">Knowledge Graphs</span>
-              <span class="tag">Recommender Systems</span>
-            </div>
-          </article>
-        </div>
-      </section>
 
     </main>
 
@@ -232,7 +238,7 @@
           <img src="/img/avatar.png" alt="Francesco Galati" width="150" style="border-radius:10px;object-fit:cover">
           <div>
             <div style="font-weight:700">Francesco Galati</div>
-            <div class="meta">Me in the style of <a href="https://www.youtube.com/watch?v=4PUIxEWmsvI" target="_blank">Don Hertzfeldt's World of Tomorrow</a></div>
+            
           </div>
         </div>
 
@@ -278,6 +284,7 @@
       });
     })();
   </script>
+
 
 
 
