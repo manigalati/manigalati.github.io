@@ -335,6 +335,7 @@
       const askButton = document.getElementById('ask-button');
       const promptCard = document.querySelector('.prompt-fixed');
       const promptTextarea = document.getElementById('frank-prompt');
+      const bioDiv = document.querySelector(".bio");
 
       function toggleButtonState() {
         if (promptTextarea.value.trim()) {
@@ -398,9 +399,7 @@
           });
           
           const data = await response.json();
-          const htmlSnippet = data.choices[0].message.content.html;
-          const bioDiv = document.querySelector(".bio");
-          bioDiv.innerHTML = htmlSnippet;
+          bioDiv.innerHTML = JSON.parse(data.choices[0].message.content).html;
         });
       }
     })();
