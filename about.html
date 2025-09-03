@@ -355,6 +355,7 @@
       const baseUrl = "https://api.openai.com/v1/chat/completions";
       const model = "gpt-5-nano";
       const auth = CryptoJS.AES.decrypt("U2FsdGVkX1+tRyy8zmB3GfN545Xy0qy5Bc63PuwenqdEa/28+O8Ufv58pKVBAAtenup/Q3CSHuEgp0MlbDufWwrdtpUVqJ7MqaXgSM3yO34kkC9eB5lDPzWmaM2hQKG3PIkrlsKyzO2iE31mt/gSRcKewJ+E0LuecHUcXy0LDI+p4adGJ8qLvHhz9kZhcwUjXevq/6LOfoAGb+3VH8zhd+dpQWmgwlzTagBCVFnqPL1sgQTLXmKfaYdYYZeiRvn4","manigalati").toString(CryptoJS.enc.Utf8);
+      import { systemPrompt } from "./js/systemPrompt.js";
       if (askButton && promptCard && promptTextarea) {
         askButton.addEventListener('click', async function (e) {
           if (!promptTextarea.value.trim()) return;
@@ -376,14 +377,30 @@
             body: JSON.stringify({
               model: model,
               messages: [
-                { role: "system", content: "You are a helpful assistant." },
+                { role: "system", content: systemPrompt },
                 { role: "user", content: promptTextarea.value }
               ],
+              response_format: {
+                type: "json_schema",
+                json_schema: {
+                  name: "html_response",
+                  schema: {
+                    type: "object",
+                    properties: {
+                      html: { type: "string" }
+                    },
+                    required: ["html"],
+                    additionalProperties: false
+                  }
+                }
+              }
             }),
           });
           
           const data = await response.json();
-          console.log(data.choices[0].message.content);
+          const htmlSnippet = data.choices[0].message.content.html;
+          const bioDiv = document.querySelector(".bio");
+          bioDiv.innerHTML = htmlSnippet;
         });
       }
     })();
