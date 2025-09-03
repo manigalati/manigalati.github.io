@@ -96,9 +96,14 @@
 
     .prompt-fixed {
       position: fixed;
-      bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
       z-index: 9999;
       width: min(980px, calc(100% - 32px));
+    }
+    .not-pinned {
+      top: 40%;
+    }
+    .pinned {
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
     }
 
     /* left column */
@@ -279,7 +284,7 @@
         </div>
         
         
-        <div class="card no-hover prompt-fixed" role="region" aria-label="Ask Francesco">
+        <div class="card no-hover prompt-fixed not-pinned" role="region" aria-label="Ask Francesco">
           <textarea id="frank-prompt" name="prompt" rows="3" placeholder="e.g. What research topics are you exploring?" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.06); font-family: var(--font-main); font-size: 14px; resize: vertical; height: 49px;"></textarea>
           <div style="display:flex;justify-content:center;margin-top:6px;">
             <button type="button" id="ask-button" aria-label="Ask Francesco" style="cursor:pointer;border-radius:10px;padding:8px 12px;border:0;background:linear-gradient(90deg,var(--accent),#7b3be0);color:#fff;font-weight:700;font-family:var(--font-code);">
@@ -319,6 +324,20 @@
       window.addEventListener('DOMContentLoaded', relocate);
       // initial run (in case script loaded late)
       relocate();
+
+      const askButton = document.getElementById('ask-button');
+      const promptCard = document.querySelector('.prompt-fixed');
+      const promptTextarea = document.getElementById('frank-prompt');
+      if (askButton && promptCard) {
+        askButton.addEventListener('click', (e) => {
+          if (promptCard.classList.contains('pinned')) return;
+          promptCard.classList.remove('not-pinned').add('pinned');
+          promptTextarea.focus();
+          // If you want the page to scroll so the prompt is clearly visible at bottom, uncomment:
+          // promptCard.scrollIntoView({behavior: 'smooth', block: 'end'});
+          promptCard.setAttribute('aria-hidden', 'false');
+        });
+      }
     })();
   </script>
 
