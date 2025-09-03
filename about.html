@@ -95,7 +95,7 @@
     .card p{margin:0;font-size:14px}
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
     .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(124, 58, 237, 0.08);text-decoration:none;color:inherit;}
-    .bio{padding:0px 14px;text-align:justify;}
+    .answer{padding:0px 14px;text-align:justify;}
 
     .prompt-fixed {
       position: fixed;
@@ -280,7 +280,7 @@
 
       <section id="projects" aria-labelledby="projects-title">
         <h2 id="projects-title" style="font-size:18px;margin:18px 0 8px;font-size: 1rem;text-transform: uppercase;font-weight: 400;">About <br> Me ↘</h2>
-        <div class="bio">
+        <div class="answer">
           <!--<p>I studied computer engineering with a strong focus on artificial intelligence, human–computer interaction, and creative applications of technology. Over the years, I’ve contributed to academic research, open-source frameworks, and artistic projects that use AI as a medium of expression.</p>
           <p>Beyond work, I enjoy exploring digital art, curating exhibitions where AI and human creativity intersect, and writing about the philosophical questions raised by intelligent systems.</p>
           <p>If you’d like to collaborate, discuss research, or just chat about AI and creativity, feel free to reach out at <a href="mailto:francesco.galati@live.com">francesco.galati@live.com</a>.</p>-->
@@ -335,7 +335,7 @@
       const askButton = document.getElementById('ask-button');
       const promptCard = document.querySelector('.prompt-fixed');
       const promptTextarea = document.getElementById('frank-prompt');
-      const bioDiv = document.querySelector(".bio");
+      const answerDiv = document.querySelector(".answer");
 
       function toggleButtonState() {
         if (promptTextarea.value.trim()) {
@@ -399,7 +399,7 @@
           });
           
           const data = await response.json();
-          bioDiv.innerHTML = JSON.parse(data.choices[0].message.content).html;
+          answerDiv.innerHTML = JSON.parse(data.choices[0].message.content).html;
         });
       }
     })();
