@@ -289,7 +289,11 @@
         <div class="card no-hover prompt-fixed not-pinned" role="region" aria-label="Ask Francesco">
           <textarea id="frank-prompt" name="prompt" rows="3" placeholder="e.g. What research topics are you exploring?" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.06); font-family: var(--font-main); font-size: 14px; resize: vertical; height: 49px;"></textarea>
           <div style="display:flex;justify-content:center;margin-top:6px;">
-            <button type="button" id="ask-button" aria-label="Ask Francesco" style="cursor:pointer;border-radius:10px;padding:8px 12px;border:0;background:linear-gradient(90deg,var(--accent),#7b3be0);color:#fff;font-weight:700;font-family:var(--font-code);">
+            <button type="button" id="ask-button" aria-label="Ask Francesco" 
+              style="cursor:not-allowed;opacity:0.6;border-radius:10px;padding:8px 12px;border:0;
+                     background:linear-gradient(90deg,var(--accent),#7b3be0);color:#fff;
+                     font-weight:700;font-family:var(--font-code);" 
+              disabled>
               Ask
             </button>
           </div>
@@ -328,8 +332,48 @@
       relocate();
 
       const askButton = document.getElementById('ask-button');
+const promptTextarea = document.getElementById('frank-prompt');
+
+function toggleButtonState() {
+  if (promptTextarea.value.trim()) {
+    askButton.disabled = false;
+    askButton.style.cursor = "pointer";
+    askButton.style.opacity = "1";
+  } else {
+    askButton.disabled = true;
+    askButton.style.cursor = "not-allowed";
+    askButton.style.opacity = "0.6";
+  }
+}
+
+// Run once on load
+toggleButtonState();
+
+// Watch for user typing
+promptTextarea.addEventListener('input', toggleButtonState);
+
+
+      const askButton = document.getElementById('ask-button');
       const promptCard = document.querySelector('.prompt-fixed');
       const promptTextarea = document.getElementById('frank-prompt');
+
+      function toggleButtonState() {
+        if (promptTextarea.value.trim()) {
+          askButton.disabled = false;
+          askButton.style.cursor = "pointer";
+          askButton.style.opacity = "1";
+        } else {
+          askButton.disabled = true;
+          askButton.style.cursor = "not-allowed";
+          askButton.style.opacity = "0.3";
+        }
+      }
+
+      // Run once on load
+      toggleButtonState();
+      // Watch for user typing
+      promptTextarea.addEventListener('input', toggleButtonState);
+      
       const baseUrl = "https://api.openai.com/v1/chat/completions";
       const model = "gpt-5-nano";
       const auth = CryptoJS.AES.decrypt("U2FsdGVkX1+tRyy8zmB3GfN545Xy0qy5Bc63PuwenqdEa/28+O8Ufv58pKVBAAtenup/Q3CSHuEgp0MlbDufWwrdtpUVqJ7MqaXgSM3yO34kkC9eB5lDPzWmaM2hQKG3PIkrlsKyzO2iE31mt/gSRcKewJ+E0LuecHUcXy0LDI+p4adGJ8qLvHhz9kZhcwUjXevq/6LOfoAGb+3VH8zhd+dpQWmgwlzTagBCVFnqPL1sgQTLXmKfaYdYYZeiRvn4","manigalati").toString(CryptoJS.enc.Utf8);
