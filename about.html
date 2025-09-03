@@ -98,9 +98,10 @@
       position: fixed;
       z-index: 9999;
       width: min(980px, calc(100% - 32px));
+      transition: bottom 2s ease;
     }
     .not-pinned {
-      top: 40%;
+      bottom: 40%;
     }
     .pinned {
       bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
@@ -122,7 +123,6 @@
         transform: translateY(-6px);
         transition: transform 220ms cubic-bezier(.2,.9,.2,1);
       }
-      .card.no-hover:hover { transform: none; transition: none; }
     }
 
     /* responsive */
@@ -328,15 +328,37 @@
       const askButton = document.getElementById('ask-button');
       const promptCard = document.querySelector('.prompt-fixed');
       const promptTextarea = document.getElementById('frank-prompt');
-      if (askButton && promptCard) {
+      const baseUrl = "https://api.openai.com/v1/chat/completions";
+      const model = "gpt-5-nano";
+      const auth = "";
+      if (askButton && promptCard && promptTextarea && promptTextarea.value) {
         askButton.addEventListener('click', (e) => {
-          if (promptCard.classList.contains('pinned')) return;
-          promptCard.classList.remove('not-pinned')
-          promptCard.classList.add('pinned');
-          promptTextarea.focus();
-          // If you want the page to scroll so the prompt is clearly visible at bottom, uncomment:
-          // promptCard.scrollIntoView({behavior: 'smooth', block: 'end'});
-          promptCard.setAttribute('aria-hidden', 'false');
+          if (promptCard.classList.contains('not-pinned')) {
+            promptCard.classList.remove('not-pinned')
+            promptCard.classList.add('pinned');
+            promptTextarea.focus();
+            // If you want the page to scroll so the prompt is clearly visible at bottom, uncomment:
+            // promptCard.scrollIntoView({behavior: 'smooth', block: 'end'});
+            promptCard.setAttribute('aria-hidden', 'false');
+          }
+          
+          const response = await fetch(baseUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": auth,
+            },
+            body: JSON.stringify({
+              model: model,
+              messages: [
+                { role: "system", content: "You are a helpful assistant." },
+                { role: "user", content: promptTextarea.value }
+              ],
+            }),
+          });
+          
+          const data = await response.json();
+          console.log(data.choices[0].message.content);
         });
       }
     })();
