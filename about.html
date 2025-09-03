@@ -332,9 +332,9 @@
       const promptTextarea = document.getElementById('frank-prompt');
       const baseUrl = "https://api.openai.com/v1/chat/completions";
       const model = "gpt-5-nano";
-      const auth = "";
+      const auth = CryptoJS.AES.decrypt("U2FsdGVkX1+tRyy8zmB3GfN545Xy0qy5Bc63PuwenqdEa/28+O8Ufv58pKVBAAtenup/Q3CSHuEgp0MlbDufWwrdtpUVqJ7MqaXgSM3yO34kkC9eB5lDPzWmaM2hQKG3PIkrlsKyzO2iE31mt/gSRcKewJ+E0LuecHUcXy0LDI+p4adGJ8qLvHhz9kZhcwUjXevq/6LOfoAGb+3VH8zhd+dpQWmgwlzTagBCVFnqPL1sgQTLXmKfaYdYYZeiRvn4","manigalati").toString(CryptoJS.enc.Utf8);
       if (askButton && promptCard && promptTextarea && promptTextarea.value) {
-        askButton.addEventListener('click', (e) => {
+        askButton.addEventListener('click', async (e) => {
           if (promptCard.classList.contains('not-pinned')) {
             promptCard.classList.remove('not-pinned')
             promptCard.classList.add('pinned');
