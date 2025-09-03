@@ -331,7 +331,8 @@
       if (askButton && promptCard) {
         askButton.addEventListener('click', (e) => {
           if (promptCard.classList.contains('pinned')) return;
-          promptCard.classList.remove('not-pinned').add('pinned');
+          promptCard.classList.remove('not-pinned')
+          promptCard.classList.add('pinned');
           promptTextarea.focus();
           // If you want the page to scroll so the prompt is clearly visible at bottom, uncomment:
           // promptCard.scrollIntoView({behavior: 'smooth', block: 'end'});
