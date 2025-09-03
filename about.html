@@ -330,29 +330,7 @@
       window.addEventListener('DOMContentLoaded', relocate);
       // initial run (in case script loaded late)
       relocate();
-
-      const askButton = document.getElementById('ask-button');
-const promptTextarea = document.getElementById('frank-prompt');
-
-function toggleButtonState() {
-  if (promptTextarea.value.trim()) {
-    askButton.disabled = false;
-    askButton.style.cursor = "pointer";
-    askButton.style.opacity = "1";
-  } else {
-    askButton.disabled = true;
-    askButton.style.cursor = "not-allowed";
-    askButton.style.opacity = "0.6";
-  }
-}
-
-// Run once on load
-toggleButtonState();
-
-// Watch for user typing
-promptTextarea.addEventListener('input', toggleButtonState);
-
-
+      
       const askButton = document.getElementById('ask-button');
       const promptCard = document.querySelector('.prompt-fixed');
       const promptTextarea = document.getElementById('frank-prompt');
