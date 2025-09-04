@@ -228,7 +228,7 @@
     <aside class="profile" aria-labelledby="profile-title">
       <div class="card" id="profile-title">
         <div style="display:flex;gap:12px;align-items:center">
-          <img src="/img/avatar_bk.png" alt="Francesco Galati" width="40%" loading="lazy" style="border-radius:10px;object-fit:cover">
+          
           <div>
             <div id="my_name" style="font-weight:700;font-size: 1.5em;">Francesco Galati</div>
           </div>
@@ -267,43 +267,23 @@
 
       <section id="article-robustness" aria-labelledby="article-robustness-title" style="margin-top:20px;">
         <article class="" tabindex="0" aria-describedby="article-robustness-lead">
+          <p>In April 2019, the European Commission's High-Level Expert Group on Artificial Intelligence (AI) published the European Ethics Guidelines for Trustworthy AI<sup>[1]</sup>. In this document, the Commission outlines <i>robustness</i> as one of three fundamental prerequisites for societies to develop, deploy, and use Trustworthy AI systems, together with ethics and law. Specifically, AI systems need to be robust technically and socially. From the technical perspective, robustness requires development with a preventative approach to risks and in a manner such that AI systems reliably behave as intended. From the social perspective, robustness becomes entwined with ethics and the principle of prevention of harm: AI systems should be both safe, i.e., not adversely affect human beings physically or mentally, and secure, i.e., not open to malicious use. At present, both perspectives are often underdeveloped, raising significant issues during the deployment of robust AI systems. For instance, large language models like ChatGPT can be exploited with jailbreaks to circumvent content moderation guidelines<sup>[2]</sup>, face recognition exhibits decreased accuracy when identifying minoritized ethnicities<sup>[3]</sup>, self-driving cars are better than humans at routine tasks but struggle in low-light conditions<sup>[4]</sup>.</p>
           
-      
-          <p id="article-robustness-lead" class="lead" style="margin-bottom:14px;">
-            In April 2019 the European Commission’s High-Level Expert Group on AI highlighted <em>robustness</em> as one of the three foundational prerequisites for trustworthy AI, alongside ethics and law.
-            Robustness covers both a technical requirement — that systems behave reliably under unexpected conditions — and a social requirement — that systems are safe and protected from malicious use.
-            While generalization on expected data is important, true robustness requires resilience to disruptive inputs and to shifts in the environment where the system operates.
-          </p>
-      
-          <section aria-labelledby="why-robustness">
-            <h3 id="why-robustness" style="font-size:16px;margin:10px 0 6px 0">What robustness means (technical vs social)</h3>
-            <p>
-              The European guidelines frame robustness in two complementary ways:
-              <strong>technical robustness</strong> — developing systems with a preventative, risk-aware mindset so they behave as intended; and
-              <strong>social robustness</strong> — ensuring systems do not cause physical, psychological or societal harm and are resilient to misuse or attack.
-            </p>
-            <p>
-              Real deployments reveal gaps in both dimensions: for example, large language models can be coaxed to break content policies by crafted prompts, face recognition systems can perform worse on minoritized groups, and autonomous vehicles may struggle in low-light or otherwise shifted conditions.
-              These examples show that robustness is not only about performance on held-out test sets but about safe, reliable behaviour in the wild.
-              (See the European Ethics Guidelines for Trustworthy AI for the original framing.) 
-              <a href="https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai" target="_blank" rel="noopener">[EU Guidelines]</a>
-            </p>
-          </section>
-      
+          <p>The lack of rigorous definitions for trustworthiness is identified in~\cite{Bürger2024} as a main obstacle to the deployment of AI systems. There remains considerable vagueness around core pillars of trustworthiness, like reliability and robustness, which have slightly different interpretations depending on the domain of application, and are often interchangeably used with related terms, such as stability~\cite{bousquet2002} or safety~\cite{bahr2014}. By considering AI systems, this manuscript adheres to the definitions from the IEEE Standard Glossary of Software Engineering Terminology~\cite{IEEE1990}.</p>
+    
           <section aria-labelledby="defs" style="margin-top:12px;">
-            <h3 id="defs" style="font-size:16px;margin:10px 0 6px 0">Key definitions</h3>
-      
             <div style="display:grid;gap:10px">
               <div style="padding:12px;border-radius:8px;background:rgba(0,0,0,0.02)">
                 <strong>Reliability</strong><br>
                 <em>The ability of a system to perform its required functions under some stated conditions for a specified period of time.</em>
-                <div style="font-size:13px;margin-top:6px;color:rgba(0,0,0,0.6)">(adapted from the IEEE Standard Glossary of Software Engineering Terminology)</div>
+                
               </div>
       
               <div style="padding:12px;border-radius:8px;background:rgba(0,0,0,0.02)">
                 <strong>Robustness</strong><br>
                 <em>The degree to which a system can function correctly in the presence of invalid or disruptive inputs.</em>
               </div>
+              <p>In the latter definition, invalid inputs are those that fall outside some given <i>specifications</i> in which the system is developed. Instead, we follow a computer system approach which extends this definition as follows:</p>
       
               <div style="padding:12px;border-radius:8px;background:rgba(0,0,0,0.02)">
                 <strong>Invalid input</strong><br>
@@ -312,72 +292,28 @@
             </div>
           </section>
       
-          <section aria-labelledby="ood" style="margin-top:12px;">
-            <h3 id="ood" style="font-size:16px;margin:10px 0 6px 0">Out-of-distribution inputs: anomalies vs domain shifts</h3>
-            <p>
-              Disruptive inputs can come from two broad sources:
-            </p>
-            <ul>
-              <li><strong>Anomalies</strong> — sporadic, corrupted, or noisy inputs that do not change the overall data distribution but can transiently break the system (e.g. sensor noise, tampered images).</li>
-              <li><strong>Domain shifts</strong> — sustained changes in the domain encountered after deployment (e.g. a camera moved to a new location or a change in image style), which permanently alter the distribution the model sees.</li>
-            </ul>
-            <p>
-              Robustness requires handling both: good generalization on in-distribution (ID) data is necessary but not sufficient.
-            </p>
-          </section>
+          <p>Disruptive inputs can be drawn from the same or close distribution as the expected inputs, referred to as in-distribution (ID) data, or from a different distribution, referred to as out-of-distribution (OOD) data. OOD data may occur in two forms:</p>
+
+          <ol>
+          <li><strong>anomalies</strong>, which are inputs of corrupted quality that appear only sporadically after deployment, without altering the overall data statistics as seen by the system;</li>
+          <li><strong>domain shifts</strong>, which are inputs of a different domain that recur consistently after deployment, changing the data distribution encountered by the system for an indefinite period of time.</li>
+          </ol>
+
       
-          <section aria-labelledby="sam-ex" style="margin-top:12px;">
-            <h3 id="sam-ex" style="font-size:16px;margin:10px 0 6px 0">Illustration: how robustness affects image segmentation (SAM)</h3>
-            <p>
-              As an illustrative example, consider the Segment Anything Model (SAM), a foundation model for image segmentation. The model performs well on many clean, in-distribution photographs, but its performance can degrade under disrupted inputs.
-            </p>
-      
-            <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px;">
-              <!-- Image placeholders: replace src with your images or demo screenshots -->
-              <figure style="margin:0">
-                <img src="/img/sam_example_id.jpg" alt="Photograph of a herd of horses — SAM segmentation on in-distribution image" style="width:100%;border-radius:8px;max-height:320px;object-fit:cover;">
-                <figcaption style="font-size:13px;margin-top:6px">In-distribution photograph: SAM segments horses and sky correctly.</figcaption>
-              </figure>
-      
-              <figure style="margin:0">
-                <img src="/img/sam_example_pgd.jpg" alt="Same horse scene with small adversarial perturbations — SAM fails to segment correctly" style="width:100%;border-radius:8px;max-height:320px;object-fit:cover;">
-                <figcaption style="font-size:13px;margin-top:6px">Anomaly (adversarial perturbation via PGD): small visual changes break segmentation despite human observers still recognising the scene.</figcaption>
-              </figure>
-      
-              <figure style="margin:0">
-                <img src="/img/sam_example_drawing.jpg" alt="Drawing of horses (children's book style) — SAM segmentation struggles due to domain shift" style="width:100%;border-radius:8px;max-height:320px;object-fit:cover;">
-                <figcaption style="font-size:13px;margin-top:6px">Domain shift (illustration instead of photo): SAM struggles with a different visual style even when content is similar.</figcaption>
-              </figure>
-            </div>
-      
-            <p style="margin-top:10px">
-              These three cases demonstrate the gap between human visual robustness and current model behaviour: humans easily recognise noisy or stylised versions of the same scene, while the model can fail catastrophically under modest perturbations or when the visual domain changes.
-            </p>
-          </section>
-      
-          <section aria-labelledby="implications" style="margin-top:12px;">
-            <h3 id="implications" style="font-size:16px;margin:10px 0 6px 0">Implications for research and deployment</h3>
-            <p>
-              Several practical lessons follow:
-            </p>
-            <ol>
-              <li><strong>Design for the threat model:</strong> identify likely anomalies and domain shifts for the target environment and test models under those conditions.</li>
-              <li><strong>Monitor in production:</strong> instrument systems to detect distributional changes and flag degraded behaviour early.</li>
-              <li><strong>Adopt layered defences:</strong> combine robust training, input sanitisation, uncertainty estimation, and human-in-the-loop fallbacks.</li>
-              <li><strong>Address social aspects:</strong> ensure fairness across groups, defend against malicious prompts/attacks, and prioritise safety for people affected by the system.</li>
-            </ol>
-            <p>
-              Without rigorous definitions and operational practices for trustworthiness (including reliability and robustness), deployments risk harm, biased outcomes, or easy exploitation.
-            </p>
-          </section>
-      
-          <section aria-labelledby="conclusion" style="margin-top:12px;">
-            <h3 id="conclusion" style="font-size:16px;margin:10px 0 6px 0">Conclusion</h3>
-            <p>
-              Robustness is a multi-faceted requirement that bridges engineering, risk management and ethics. Building trustworthy AI means going beyond held-out test accuracy: systems must be designed, tested and monitored against realistic anomalies and domain shifts, and their social impact must be considered from the start.
-            </p>
-          </section>
-      
+          <p>The ability of a system to handle ID data, known as generalization, is a necessary but insufficient condition for ensuring robustness, which requires the system to remain effective even when encountering anomalous or domain-shifted data.</p>
+
+
+          <p>To illustrate how poor robustness affects image segmentation systems, we provide examples using the Segment Anything Model (SAM)~\cite{SAM}, a well-known foundation model for semantic image segmentation as of the writing of this chapter.</p>
+          
+          
+          <p>The first image in the top left corner of Figure~\ref{Fig:break_SAM}, which depicts a herd of horses, is among the testing examples natively provided in the demo of SAM. This represents a case of ID data, where the image is well-represented within the training data distribution. As visible from the resulting segmentation in the second row, SAM successfully segments the primary elements inside the image, such as most of the galloping horses and clouds in the sky.</p>
+          
+          
+          <p>The second example illustrates anomalies. Although it depicts what appears to be the same scene as the first image, it has been altered using an attack method known as Projected Gradient Descent (PGD)~\cite{PGD}. This technique introduces minimal quality degradations to the image that significantly compromise model performance. As a result, SAM fails to recognize all clouds and all but one of the horses in the modified image. On the contrary, human observers can still easily discern them, underscoring the superior robustness of the human sight to noise perturbations.</p>
+          
+          
+          <p>The third example is a drawing from a children's coloring book rather than a photograph, i.e. a shift in domain. Despite the change in style, the content has remained similar: two horses galloping outdoors on a sunny day. Once again, SAM struggles to accurately delineate the main features of the image, as many elements are either partially segmented (e.g., the adult horse) or missed entirely (e.g., the foal and the background shrubbery).</p>
+
           <section aria-labelledby="references" style="margin-top:14px;">
             <h3 id="references" style="font-size:15px;margin:10px 0 6px 0">References &amp; further reading</h3>
             <ul style="font-size:13px;margin:0;padding-left:18px">
@@ -425,5 +361,6 @@
       relocate();
     })();
   </script>
+
 
 </body></html>
