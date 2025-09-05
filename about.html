@@ -361,6 +361,7 @@
           askButton.disabled = true;
           askButton.style.cursor = "not-allowed";
           askButton.style.opacity = "0.3";
+          askButton.blur()
         }
       }
 
@@ -378,11 +379,19 @@
           if (promptCard.classList.contains('not-pinned')) {
             promptCard.classList.remove('not-pinned')
             promptCard.classList.add('pinned');
-            promptTextarea.focus();
+            // promptTextarea.focus();
             // If you want the page to scroll so the prompt is clearly visible at bottom, uncomment:
             // promptCard.scrollIntoView({behavior: 'smooth', block: 'end'});
             promptCard.setAttribute('aria-hidden', 'false');
           }
+
+          const message = promptTextarea.value
+          
+          askButton.disabled = true;
+          askButton.style.cursor = "not-allowed";
+          askButton.style.opacity = "0.3";
+          askButton.blur()
+          promptTextarea.value = ""
           
           const response = await fetch(baseUrl, {
             method: "POST",
@@ -394,7 +403,7 @@
               model: model,
               messages: [
                 { role: "system", content: window.systemPrompt },
-                { role: "user", content: promptTextarea.value }
+                { role: "user", content: message }
               ],
               response_format: {
                 type: "json_schema",
@@ -412,11 +421,6 @@
               }
             }),
           });
-
-          askButton.disabled = true;
-          askButton.style.cursor = "not-allowed";
-          askButton.style.opacity = "0.3";
-          promptTextarea.value = ""
           
           const data = await response.json();
           answerDiv.innerHTML = JSON.parse(data.choices[0].message.content).html;
