@@ -96,19 +96,7 @@
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
     .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(124, 58, 237, 0.08);text-decoration:none;color:inherit;}
     .answer{padding:0px 14px;text-align:justify;}
-
-    .prompt-fixed {
-      position: fixed;
-      z-index: 9999;
-      width: min(980px, calc(100% - 32px));
-      transition: bottom 2s ease;
-    }
-    .not-pinned {
-      bottom: 40%;
-    }
-    .pinned {
-      bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
-    }
+    .prompt-fixed {z-index: 9999;width: min(980px, calc(100% - 32px));}
 
     /* left column */
     aside.profile{position:sticky;top:40px;align-self:start;display:flex;flex-direction:column;gap:16px}
@@ -125,6 +113,16 @@
       .card:not(.no-hover):hover {
         transform: translateY(-6px);
         transition: transform 220ms cubic-bezier(.2,.9,.2,1);
+      }
+      .prompt-fixed {
+        position: fixed;
+        transition: bottom 2s ease;
+      }
+      .not-pinned {
+        bottom: 40%;
+      }
+      .pinned {
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
       }
     }
 
@@ -179,6 +177,19 @@
       
       #my_name {
         font-size:2em !important;
+      }
+
+      .prompt-fixed {
+        position: inherit;
+        transition: none;
+      }
+      
+      .not-pinned {
+        margin-top: 20%;
+      }
+      
+      .pinned {
+        margin-top: 20%;
       }
     }
     
