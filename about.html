@@ -412,6 +412,11 @@
               }
             }),
           });
+
+          askButton.disabled = true;
+          askButton.style.cursor = "not-allowed";
+          askButton.style.opacity = "0.3";
+          promptTextarea.value = ""
           
           const data = await response.json();
           answerDiv.innerHTML = JSON.parse(data.choices[0].message.content).html;
