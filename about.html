@@ -323,7 +323,7 @@
       if (!profile) return;
       const wrapper = profile.querySelector('div'); // the flex wrapper containing img+name
       const img = profile.querySelector('img');
-    
+  
       function relocate() {
         if (window.innerWidth <= 1000) {
           // move the <img> to be the first child of #profile-title
@@ -333,7 +333,7 @@
           if (img && wrapper && img.parentElement !== wrapper) wrapper.insertBefore(img, wrapper.firstChild);
         }
       }
-    
+  
       window.addEventListener('resize', relocate);
       window.addEventListener('DOMContentLoaded', relocate);
       // initial run (in case script loaded late)
@@ -343,8 +343,57 @@
       const promptCard = document.querySelector('.prompt-fixed');
       const promptTextarea = document.getElementById('frank-prompt');
       const answerDiv = document.querySelector(".answer");
-
+  
+      // keep original button HTML so we can restore it
+      const ORIGINAL_BUTTON_HTML = askButton ? askButton.innerHTML : 'Ask';
+  
+      // Loading-dot animation state
+      let loadingInterval = null;
+      let loadingTick = 0; // 0..3
+  
+      function startLoadingLoop() {
+        // avoid starting multiple intervals
+        if (!answerDiv || loadingInterval) return;
+        loadingTick = 0;
+        answerDiv.textContent = 'Loading';
+        // update every 800ms (feel free to change)
+        loadingInterval = setInterval(() => {
+          loadingTick = (loadingTick + 1) % 4; // cycles 0,1,2,3
+          answerDiv.textContent = 'Loading' + '.'.repeat(loadingTick);
+        }, 800);
+      }
+  
+      function stopLoadingLoop() {
+        if (loadingInterval) {
+          clearInterval(loadingInterval);
+          loadingInterval = null;
+        }
+        loadingTick = 0;
+      }
+  
+      function setUiLoading(isLoading) {
+        if (!askButton || !promptTextarea) return;
+        if (isLoading) {
+          askButton.disabled = true;
+          askButton.style.cursor = "not-allowed";
+          askButton.style.opacity = "0.3";
+          promptTextarea.disabled = true;
+          promptTextarea.setAttribute('aria-disabled','true');
+          // start text animation in answerDiv
+          startLoadingLoop();
+        } else {
+          askButton.disabled = false;
+          askButton.style.cursor = "pointer";
+          askButton.style.opacity = "1";
+          promptTextarea.disabled = false;
+          promptTextarea.removeAttribute('aria-disabled');
+          // stop animation; do not overwrite answerDiv (caller will set response or error)
+          stopLoadingLoop();
+        }
+      }
+  
       function toggleButtonState() {
+        if (!askButton || !promptTextarea) return;
         if (promptTextarea.value.trim()) {
           askButton.disabled = false;
           askButton.style.cursor = "pointer";
@@ -353,15 +402,15 @@
           askButton.disabled = true;
           askButton.style.cursor = "not-allowed";
           askButton.style.opacity = "0.3";
-          askButton.blur()
+          askButton.blur();
         }
       }
-
+  
       // Run once on load
       toggleButtonState();
       // Watch for user typing
       promptTextarea.addEventListener('input', toggleButtonState);
-
+  
       // Submit when Enter is pressed (but allow Shift+Enter for newline)
       promptTextarea.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
@@ -373,6 +422,7 @@
       const baseUrl = "https://api.openai.com/v1/chat/completions";
       const model = "gpt-5-nano";
       const auth = CryptoJS.AES.decrypt("U2FsdGVkX1+tRyy8zmB3GfN545Xy0qy5Bc63PuwenqdEa/28+O8Ufv58pKVBAAtenup/Q3CSHuEgp0MlbDufWwrdtpUVqJ7MqaXgSM3yO34kkC9eB5lDPzWmaM2hQKG3PIkrlsKyzO2iE31mt/gSRcKewJ+E0LuecHUcXy0LDI+p4adGJ8qLvHhz9kZhcwUjXevq/6LOfoAGb+3VH8zhd+dpQWmgwlzTagBCVFnqPL1sgQTLXmKfaYdYYZeiRvn4","manigalati").toString(CryptoJS.enc.Utf8);
+  
       if (askButton && promptCard && promptTextarea) {
         askButton.addEventListener('click', async function (e) {
           if (!promptTextarea.value.trim()) return;
@@ -384,49 +434,70 @@
             // promptCard.scrollIntoView({behavior: 'smooth', block: 'end'});
             promptCard.setAttribute('aria-hidden', 'false');
           }
-
-          const message = promptTextarea.value
+  
+          const message = promptTextarea.value;
           
-          askButton.disabled = true;
-          askButton.style.cursor = "not-allowed";
-          askButton.style.opacity = "0.3";
-          promptTextarea.value = ""
-          promptTextarea.blur()
-          
-          const response = await fetch(baseUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": auth,
-            },
-            body: JSON.stringify({
-              model: model,
-              messages: [
-                { role: "system", content: window.systemPrompt },
-                { role: "user", content: message }
-              ],
-              response_format: {
-                type: "json_schema",
-                json_schema: {
-                  name: "html_response",
-                  schema: {
-                    type: "object",
-                    properties: {
-                      html: { type: "string" }
-                    },
-                    required: ["html"],
-                    additionalProperties: false
+          // UI: disable inputs and start simple loading text
+          setUiLoading(true);
+  
+          // clear input visually and blur
+          promptTextarea.value = "";
+          promptTextarea.blur();
+          toggleButtonState();
+  
+          try {
+            const response = await fetch(baseUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": auth,
+              },
+              body: JSON.stringify({
+                model: model,
+                messages: [
+                  { role: "system", content: window.systemPrompt },
+                  { role: "user", content: message }
+                ],
+                response_format: {
+                  type: "json_schema",
+                  json_schema: {
+                    name: "html_response",
+                    schema: {
+                      type: "object",
+                      properties: {
+                        html: { type: "string" }
+                      },
+                      required: ["html"],
+                      additionalProperties: false
+                    }
                   }
                 }
-              }
-            }),
-          });
-          
-          const data = await response.json();
-          answerDiv.innerHTML = JSON.parse(data.choices[0].message.content).html;
+              }),
+            });
+  
+            if (!response.ok) {
+              const errText = await response.text();
+              // stop loader then show error
+              setUiLoading(false);
+              answerDiv.innerHTML = `<div><strong>Error ${response.status}:</strong> ${errText}</div>`;
+              console.error('API error', response.status, errText);
+              return;
+            }
+  
+            const data = await response.json();
+            // stop loader and insert returned HTML
+            setUiLoading(false);
+            answerDiv.innerHTML = JSON.parse(data.choices[0].message.content).html;
+  
+          } catch (err) {
+            console.error(err);
+            setUiLoading(false);
+            answerDiv.innerHTML = `<div><strong>Request failed:</strong> ${err.message}</div>`;
+          }
         });
       }
     })();
   </script>
+
 
 </body></html>
