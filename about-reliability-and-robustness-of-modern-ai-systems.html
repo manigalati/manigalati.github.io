@@ -221,6 +221,58 @@
     }
 
   </style>
+
+  <style>
+    .image-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .image-grid .image-item {
+      flex: 1 1 32%;
+      max-width: 32%;
+      text-align: center;
+    }
+    .image-grid img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+    }
+    @media (max-width: 768px) {
+      .image-grid .image-item {
+        flex: 1 1 48%;
+        max-width: 48%;
+      }
+    }
+    @media (max-width: 480px) {
+      .image-grid .image-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+    }
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
+    #references ol li::before {
+      counter-increment: item;
+      content: "[" counter(item) "] ";
+    }
+    
+    #references ol li {  
+      word-break: break-all;
+      overflow-wrap: break-word;
+    }
+    
+    #references ol{
+      counter-reset: item;
+      list-style: none;
+      padding-left:0;
+    }
+</style>
   
 </head>
 <body>
@@ -262,14 +314,14 @@
       </section>
 
       <section id="projects" aria-labelledby="projects-title">
-        <h2 id="projects-title" style="font-size:18px;margin:18px 0 8px;font-size: 1rem;text-transform: uppercase;font-weight: 400;">About <br> Reliability and Robustness of Modern AI Systems ↘</h2>
+        <h2 id="projects-title" style="font-size:18px;margin:18px 0 8px;font-size: 1rem;text-transform: uppercase;font-weight: 400;">About <br> Reliable and Robust AI Systems ↘</h2>
       </section>
 
-      <section id="article-robustness" aria-labelledby="article-robustness-title" style="margin-top:20px;text-align: justify;">
+      <section id="article-robustness" aria-labelledby="article-robustness-title" style="margin-top:20px;text-align: justify;padding: 14px;">
         <article class="" tabindex="0" aria-describedby="article-robustness-lead">
           <p>In April 2019, the European Commission's High-Level Expert Group on Artificial Intelligence (AI) published the European Ethics Guidelines for Trustworthy AI<sup>[1]</sup>. In this document, the Commission outlines <i>robustness</i> as one of three fundamental prerequisites for societies to develop, deploy, and use Trustworthy AI systems, together with ethics and law. Specifically, AI systems need to be robust technically and socially. From the technical perspective, robustness requires development with a preventative approach to risks and in a manner such that AI systems reliably behave as intended. From the social perspective, robustness becomes entwined with ethics and the principle of prevention of harm: AI systems should be both safe, i.e., not adversely affect human beings physically or mentally, and secure, i.e., not open to malicious use. At present, both perspectives are often underdeveloped, raising significant issues during the deployment of robust AI systems. For instance, large language models like ChatGPT can be exploited with jailbreaks to circumvent content moderation guidelines<sup>[2]</sup>, face recognition exhibits decreased accuracy when identifying minoritized ethnicities<sup>[3]</sup>, self-driving cars are better than humans at routine tasks but struggle in low-light conditions<sup>[4]</sup>.</p>
           
-          <p>As a solution to such issues, the guidelines stress the need for future standardization to ensure safety, technical robustness, and transparency. However, there remains considerable vagueness around these standards. The lack of rigorous definitions for trustworthiness is identified in [5] as a main obstacle to the deployment of AI systems. Core pillars of trustworthiness, like reliability and robustness, which have slightly different interpretations depending on the domain of application, are often interchangeably used with related terms, such as stability<sup>[6]</sup> or safety<sup>[7]</sup>. By considering AI systems, this article adheres to the definitions from the IEEE Standard Glossary of Software Engineering Terminology<sup>[8]</sup>.</p>
+          <p>As a solution to such issues, the guidelines stress the need for future standardization to ensure safety, technical robustness, and transparency. However, there remains considerable vagueness around these standards. The lack of rigorous definitions for trustworthiness is identified in [5] as a main obstacle to the deployment of AI systems. Core pillars of trustworthiness, like reliability and robustness, which have slightly different interpretations depending on the domain of application, are often interchangeably used with related terms, such as stability<sup>[6]</sup> or safety<sup>[7]</sup>. By considering AI systems as de facto computer systems, we take into examination the definitions from the IEEE Standard Glossary of Software Engineering Terminology<sup>[8]</sup>.</p>
     
           <section aria-labelledby="defs" style="margin-top:12px;">
             <div style="display:grid;gap:10px">
@@ -295,28 +347,51 @@
           <p>Disruptive inputs can be drawn from the same or close distribution as the expected inputs, referred to as in-distribution (ID) data, or from a different distribution, referred to as out-of-distribution (OOD) data. OOD data may occur in two forms:</p>
 
           <ol>
-          <li><strong>anomalies</strong>, which are inputs of corrupted quality that appear only sporadically after deployment, without altering the overall data statistics as seen by the system;</li>
-          <li><strong>domain shifts</strong>, which are inputs of a different domain that recur consistently after deployment, changing the data distribution encountered by the system for an indefinite period of time.</li>
+            <li><strong>anomalies</strong>, which are inputs of corrupted quality that appear only sporadically after deployment, without altering the overall data statistics as seen by the system;</li>
+            <li><strong>domain shifts</strong>, which are inputs of a different domain that recur consistently after deployment, changing the data distribution encountered by the system for an indefinite period of time.</li>
           </ol>
 
-      
           <p>The ability of an AI system to handle ID data, known as generalization, is a necessary but insufficient condition for ensuring robustness, which requires the system to remain effective even when encountering anomalous or domain-shifted data.</p>
 
+          <p>To illustrate how poor robustness affects AI systems, we provide examples using the Segment Anything Model (SAM)<sup>[9]</sup>, a well-known foundation model for semantic image segmentation as of the writing of this article. SAM gives the user the possibility to assist the segmentation process with prompts like clicks or bounding boxes, but it can also operate in a fully automatic manner. In the following, we utilize this latter setup.</p>
 
-          <p>To illustrate how poor robustness affects AI systems, we provide examples using the Segment Anything Model (SAM)<sup>[9]</sup>, a well-known foundation model for semantic image segmentation as of the writing of this article.</p>
+          <div class="image-grid">
+            <!-- First row -->
+            <div class="image-item">
+              <img src="/img/GettyImages-1207721867.jpg" alt="Image 1">
+            </div>
+            <div class="image-item">
+              <img src="/img/break_sam_53.png" alt="Image 2">
+            </div>
+            <div class="image-item">
+              <img src="/img/disegno_da_colorare_8.jpg" alt="Image 3">
+            </div>
+          
+            <!-- Second row -->
+            <div class="image-item">
+              <img src="/img/GettyImages-1207721867_masked.png" alt="Image 1 Masked">
+            </div>
+            <div class="image-item">
+              <img src="/img/break_sam_53_masked.png" alt="Image 2 Masked">
+            </div>
+            <div class="image-item">
+              <img src="/img/disegno_da_colorare_8_masked.png" alt="Image 3 Masked">
+            </div>
+          </div>
+          
+          <div class="caption">
+              <strong style="font-style:normal;">Fig 1:</strong> Examples of limited robustness in semantic image segmentation under noisy inputs (column 2) and changes in style (column 3).
+          </div>
           
           
-          <p>The first image in the top left corner of Figure~\ref{Fig:break_SAM}, which depicts a herd of horses, is among the testing examples natively provided in the demo of SAM. This represents a case of ID data, where the image is well-represented within the training data distribution. As visible from the resulting segmentation in the second row, SAM successfully segments the primary elements inside the image, such as most of the galloping horses and clouds in the sky.</p>
-          
-          
-          <p>The second example illustrates anomalies. Although it depicts what appears to be the same scene as the first image, it has been altered using an attack method known as Projected Gradient Descent (PGD)<sup>[10]</sup>. This technique introduces minimal quality degradations to the image that significantly compromise model performance. As a result, SAM fails to recognize all clouds and all but one of the horses in the modified image. On the contrary, human observers can still easily discern them, underscoring the superior robustness of the human sight to noise perturbations.</p>
-          
-          
+          <p>Figure 1 presents a grid of example images alongside their corresponding segmentations retrieved by SAM. By uploading these images into SAM’s demo webpage<sup>[10]</sup>, anyone can replicate the displayed results by clicking the <i>Everything</i> button. The grid features three examples, one per column.</p>
+          <p>The first image in the top left corner, which depicts a herd of horses, is among the testing examples natively provided in the demo of SAM. This represents a case of ID data, where the image is well-represented within the training data distribution. As visible from the resulting segmentation in the second row, SAM successfully segments the primary elements inside the image, such as most of the galloping horses and clouds in the sky.</p>
+          <p>The second example illustrates anomalies. Although it depicts what appears to be the same scene as the first image, it has been altered using an attack method known as Projected Gradient Descent (PGD)<sup>[11]</sup>. This technique introduces minimal quality degradations to the image that significantly compromise model performance. As a result, SAM fails to recognize all clouds and all but one of the horses in the modified image. On the contrary, human observers can still easily discern them, underscoring the superior robustness of the human sight to noise perturbations.</p>
           <p>The third example is a drawing from a children's coloring book rather than a photograph, i.e. a shift in domain. Despite the change in style, the content has remained similar: two horses galloping outdoors on a sunny day. Once again, SAM struggles to accurately delineate the main features of the image, as many elements are either partially segmented (e.g., the adult horse) or missed entirely (e.g., the foal and the background shrubbery).</p>
 
-          <section aria-labelledby="references" style="margin-top:14px;">
-            <h3 id="references" style="font-size:15px;margin:10px 0 6px 0">References &amp; further reading</h3>
-            <ul style="font-size:13px;margin:0;padding-left:18px">
+          <section aria-labelledby="references" style="margin-top:14px;" id="references">
+            <h3 style="font-size:15px;margin:10px 0 6px 0">References &amp; further reading</h3>
+            <ol style="font-size:13px;">
               <li><a href="https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai" target="_blank" rel="noopener">https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai.</a></li>
               <li><a href="https://www.techopedia.com/how-to/how-to-jailbreak-chatgpt" target="_blank" rel="noopener">https://www.techopedia.com/how-to/how-to-jailbreak-chatgpt.</a></li>
               <li><a href="https://www.scientificamerican.com/article/police-facial-recognition-technology-cant-tell-black-people-apart" target="_blank" rel="noopener">https://www.scientificamerican.com/article/police-facial-recognition-technology-cant-tell-black-people-apart.</a></li>
@@ -326,8 +401,9 @@
               <li>Nicholas J Bahr. <em>“System safety engineering and risk assessment: a practical approach”</em> (2014).</li>
               <li><em>“IEEE Standard Glossary of Software Engineering Terminology”</em> (1990).</li>
               <li>Alexander Kirillov et al. <em>“Segment anything”</em> (2023).</li>
+              <li><a href="https://segment-anything.com/demo" target="_blank" rel="noopener">https://segment-anything.com/demo.</a></li>
               <li>Aleksander Madry et al. <em>“Towards deep learning models resistant to adversarial attacks”</em> (2017).</li>
-            </ul>
+            </ol>
           </section>
         </article>
       </section>
