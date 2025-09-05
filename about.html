@@ -390,8 +390,8 @@
           askButton.disabled = true;
           askButton.style.cursor = "not-allowed";
           askButton.style.opacity = "0.3";
-          askButton.blur()
           promptTextarea.value = ""
+          promptTextarea.blur()
           
           const response = await fetch(baseUrl, {
             method: "POST",
