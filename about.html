@@ -361,6 +361,14 @@
       toggleButtonState();
       // Watch for user typing
       promptTextarea.addEventListener('input', toggleButtonState);
+
+      // Submit when Enter is pressed (but allow Shift+Enter for newline)
+      promptTextarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
+          e.preventDefault(); // prevent inserting a newline
+          if (!askButton.disabled) askButton.click();
+        }
+      });
       
       const baseUrl = "https://api.openai.com/v1/chat/completions";
       const model = "gpt-5-nano";
