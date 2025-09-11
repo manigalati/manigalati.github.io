@@ -106,9 +106,9 @@
 
     footer{grid-column:1 / -1;margin-top:28px;font-size:13px}
 
-    /* interactions */
+    /* responsive */
     @media (min-width: 1000px) {
-      .card:not(.no-hover):hover {
+      .jump:hover {
         transform: translateY(-6px);
         transition: transform 220ms cubic-bezier(.2,.9,.2,1);
       }
@@ -131,7 +131,6 @@
       }
     }
 
-    /* responsive */
     @media (max-width: 1000px) {
       .shell{
         grid-template-columns:1fr;
@@ -297,7 +296,7 @@
         </div>
         
         
-        <div class="card no-hover prompt-fixed not-pinned" role="region" aria-label="Ask Francesco">
+        <div class="card prompt-fixed not-pinned" role="region" aria-label="Ask Francesco">
           <textarea id="frank-prompt" name="prompt" rows="3" placeholder="e.g. What degrees do you hold?" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.06); font-family: var(--font-main); font-size: 14px; resize: vertical; height: 49px;"></textarea>
           <div style="display:flex;justify-content:center;margin-top:6px;">
             <button type="button" id="ask-button" aria-label="Ask Francesco" 
